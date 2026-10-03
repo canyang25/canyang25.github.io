@@ -1,39 +1,22 @@
 import { useEffect, useState } from "react"
-import { Check, Copy, Mail } from "lucide-react"
+import { Check, Copy } from "lucide-react"
 
 import { site } from "@/content"
 import { Section } from "@/components/section"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 
 export function Contact() {
   return (
-    <Section id="contact" title="Get in touch">
-      <Card className="relative isolate overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="absolute -right-24 -bottom-32 -z-10 size-80 rounded-full bg-[radial-gradient(closest-side,oklch(0.72_0.15_265/0.18),transparent)]"
-        />
-        <CardContent className="flex flex-col gap-6 py-4 sm:flex-row sm:items-center sm:justify-between sm:py-6">
-          <div className="max-w-md">
-            <p className="text-lg font-semibold tracking-tight">
-              Have a role, a project, or a question?
-            </p>
-            <p className="mt-1 text-muted-foreground">
-              My inbox is open, and email is the fastest way to reach me.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button size="lg" className="max-w-full px-4" asChild>
-              <a href={`mailto:${site.email}`}>
-                <Mail />
-                <span className="truncate">{site.email}</span>
-              </a>
-            </Button>
-            <CopyEmailButton />
-          </div>
-        </CardContent>
-      </Card>
+    <Section id="contact" title="Contact">
+      <p className="leading-7 text-foreground/80">
+        Email is the fastest way to reach me.
+      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <a href={`mailto:${site.email}`} className="link break-all">
+          {site.email}
+        </a>
+        <CopyEmailButton />
+      </div>
     </Section>
   )
 }
@@ -65,9 +48,8 @@ function CopyEmailButton() {
   return (
     <>
       <Button
-        size="lg"
+        size="sm"
         variant="outline"
-        className="px-4"
         aria-label="Copy email address"
         onClick={copyEmail}
       >
