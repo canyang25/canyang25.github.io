@@ -21,9 +21,9 @@ export function App() {
       <main id="main">
         <Hero />
         <About />
+        <Experience />
         <Projects />
         <GitHubRepos />
-        <Experience />
         <Education />
         <Contact />
       </main>
