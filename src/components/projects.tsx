@@ -19,7 +19,7 @@ export function Projects() {
     <Section
       id="projects"
       title="Selected projects"
-      description="A few things I've built, from class assignments to weekend experiments."
+      description="Highlights from my GitHub, from a distributed MapReduce runtime to autonomous LLM agents."
     >
       <ul className="grid gap-4 sm:grid-cols-2">
         {site.projects.map((project) => (

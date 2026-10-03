@@ -1,5 +1,6 @@
 import { About } from "@/components/about"
 import { Contact } from "@/components/contact"
+import { Education } from "@/components/education"
 import { Experience } from "@/components/experience"
 import { GitHubRepos } from "@/components/github-repos"
 import { Hero } from "@/components/hero"
@@ -23,6 +24,7 @@ export function App() {
         <Projects />
         <GitHubRepos />
         <Experience />
+        <Education />
         <Contact />
       </main>
       <SiteFooter />

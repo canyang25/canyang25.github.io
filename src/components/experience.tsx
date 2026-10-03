@@ -8,11 +8,16 @@ export function Experience() {
         {site.experience.map((role) => (
           <li
             key={`${role.title}-${role.org}`}
-            className="grid gap-1 sm:grid-cols-[10rem_1fr] sm:gap-6"
+            className="grid gap-1 sm:grid-cols-[11rem_1fr] sm:gap-6"
           >
-            <p className="pt-0.5 font-mono text-xs text-muted-foreground sm:text-sm">
-              {role.period}
-            </p>
+            <div className="pt-0.5">
+              <p className="font-mono text-xs text-muted-foreground sm:text-sm">
+                {role.period}
+              </p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                {role.location}
+              </p>
+            </div>
             <div>
               <h3 className="font-semibold">
                 {role.title}
@@ -21,9 +26,11 @@ export function Experience() {
                   · {role.org}
                 </span>
               </h3>
-              <p className="mt-2 leading-relaxed text-pretty text-foreground/80">
-                {role.summary}
-              </p>
+              <ul className="mt-3 list-disc space-y-2 pl-5 leading-relaxed text-pretty text-foreground/80 marker:text-muted-foreground">
+                {role.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
             </div>
           </li>
         ))}
