@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { Menu, Moon, Sun } from "lucide-react"
 
 import { site } from "@/content"
@@ -64,6 +65,8 @@ function ThemeToggle() {
 }
 
 function MobileNav() {
+  const choseSection = useRef(false)
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -76,7 +79,16 @@ function MobileNav() {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-72">
+      <SheetContent
+        side="right"
+        className="w-72"
+        onCloseAutoFocus={(event) => {
+          // The menu button sits at the top of the page, so focusing it again
+          // would scroll back up and undo the jump to the chosen section.
+          if (choseSection.current) event.preventDefault()
+          choseSection.current = false
+        }}
+      >
         <SheetHeader>
           <SheetTitle>{site.name}</SheetTitle>
           <SheetDescription>Jump to a section</SheetDescription>
@@ -88,6 +100,7 @@ function MobileNav() {
                 <SheetClose asChild>
                   <a
                     href={item.href}
+                    onClick={() => (choseSection.current = true)}
                     className="block rounded-md px-3 py-2.5 text-base transition-colors outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50"
                   >
                     {item.label}
