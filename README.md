@@ -21,13 +21,13 @@ npm run dev
 
 Then open http://127.0.0.1:5391.
 
-| Command             | What it does                               |
-| ------------------- | ------------------------------------------ |
-| `npm run dev`       | Start the dev server with hot reload       |
-| `npm run build`     | Type-check and build the site into `dist/` |
-| `npm run preview`   | Serve the built site at port 5392          |
-| `npm run lint`      | Run ESLint                                 |
-| `npm run format`    | Format the code with Prettier              |
+| Command           | What it does                               |
+| ----------------- | ------------------------------------------ |
+| `npm run dev`     | Start the dev server with hot reload       |
+| `npm run build`   | Type-check and build the site into `dist/` |
+| `npm run preview` | Serve the built site at port 5392          |
+| `npm run lint`    | Run ESLint                                 |
+| `npm run format`  | Format the code with Prettier              |
 
 ## Publish on GitHub Pages
 

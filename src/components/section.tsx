@@ -14,7 +14,7 @@ export function Section({ id, title, description, children }: SectionProps) {
       aria-labelledby={`${id}-title`}
       className="mx-auto max-w-4xl scroll-mt-14 px-6"
     >
-      <div className="border-t py-16 sm:py-20">
+      <div className="border-t py-14 sm:py-16">
         <div className="mb-8 sm:mb-10">
           <h2
             id={`${id}-title`}

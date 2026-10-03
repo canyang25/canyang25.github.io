@@ -18,7 +18,7 @@ export function Hero() {
         className="absolute -top-48 left-1/2 -z-10 h-[28rem] w-[48rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.72_0.15_265/0.22),transparent)]"
       />
 
-      <div className="mx-auto max-w-4xl animate-in px-6 pt-16 pb-20 duration-700 fade-in slide-in-from-bottom-3 motion-reduce:animate-none sm:pt-24 sm:pb-24">
+      <div className="mx-auto max-w-4xl animate-in px-6 pt-14 pb-16 duration-700 fade-in slide-in-from-bottom-3 motion-reduce:animate-none sm:pt-20 sm:pb-20">
         <Avatar className="size-20 shadow-sm ring-4 ring-background">
           <AvatarImage
             src={`https://github.com/${site.githubUsername}.png?size=160`}
