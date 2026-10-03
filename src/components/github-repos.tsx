@@ -22,6 +22,12 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 const VISIBLE_REPOS = 6
 
+const featuredRepos = new Set(
+  site.projects.flatMap((project) =>
+    project.repo ? [project.repo.toLowerCase()] : []
+  )
+)
+
 type ReposState =
   | { status: "loading" }
   | { status: "error"; message: string }
@@ -34,10 +40,10 @@ export function GitHubRepos() {
   return (
     <Section
       id="github"
-      title="Latest on GitHub"
+      title="More on GitHub"
       description={
         <>
-          Recently updated repositories, pulled live from{" "}
+          Other public repositories, pulled live from{" "}
           <a
             href={profileUrl}
             target="_blank"
@@ -75,7 +81,9 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
       .then((repos) =>
         setState({
           status: "ready",
-          repos: repos.slice(0, VISIBLE_REPOS),
+          repos: repos
+            .filter((repo) => !featuredRepos.has(repo.html_url.toLowerCase()))
+            .slice(0, VISIBLE_REPOS),
           fetchedAt: Date.now(),
         })
       )
@@ -138,7 +146,7 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
     return (
       <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed px-6 py-10 text-center">
         <BookMarked className="size-5 text-muted-foreground" />
-        <p className="font-medium">No public repositories yet</p>
+        <p className="font-medium">No other public repositories yet</p>
         <p className="max-w-sm text-sm text-muted-foreground">
           New projects will show up here as soon as they're public on GitHub.
         </p>
