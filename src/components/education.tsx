@@ -1,6 +1,5 @@
 import { site } from "@/content"
 import { Section } from "@/components/section"
-import { Badge } from "@/components/ui/badge"
 
 export function Education() {
   return (
@@ -9,21 +8,18 @@ export function Education() {
         {site.education.map((degree) => (
           <li
             key={degree.degree}
-            className="grid gap-1 sm:grid-cols-[11rem_1fr] sm:gap-6"
+            className="grid gap-1 sm:grid-cols-[10rem_1fr] sm:gap-6"
           >
-            <p className="pt-0.5 font-mono text-xs text-muted-foreground sm:text-sm">
+            <p className="text-sm leading-7 text-muted-foreground tabular-nums">
               {degree.period}
             </p>
             <div>
-              <h3 className="font-semibold">
-                {degree.degree}
-                <span className="font-normal text-muted-foreground">
-                  {" "}
-                  · {degree.school}
-                </span>
-              </h3>
+              <h3 className="leading-7 font-medium">{degree.degree}</h3>
+              <p className="leading-7 text-foreground/80">{degree.school}</p>
               {degree.detail && (
-                <p className="mt-1 text-foreground/80">{degree.detail}</p>
+                <p className="leading-7 text-muted-foreground">
+                  {degree.detail}
+                </p>
               )}
             </div>
           </li>
@@ -32,30 +28,22 @@ export function Education() {
 
       <dl className="mt-10 space-y-6">
         {site.coursework.length > 0 && (
-          <div className="grid gap-2 sm:grid-cols-[11rem_1fr] sm:gap-6">
-            <dt className="pt-0.5 font-mono text-xs text-muted-foreground sm:text-sm">
+          <div className="grid gap-1 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt className="text-sm leading-7 text-muted-foreground">
               Coursework
             </dt>
-            <dd>
-              <ul className="flex flex-wrap gap-1.5">
-                {site.coursework.map((course) => (
-                  <li key={course}>
-                    <Badge variant="secondary" className="h-6 px-2.5">
-                      {course}
-                    </Badge>
-                  </li>
-                ))}
-              </ul>
+            <dd className="leading-7 text-foreground/80">
+              {site.coursework.join(", ")}
             </dd>
           </div>
         )}
         {site.activities.length > 0 && (
-          <div className="grid gap-2 sm:grid-cols-[11rem_1fr] sm:gap-6">
-            <dt className="pt-0.5 font-mono text-xs text-muted-foreground sm:text-sm">
+          <div className="grid gap-1 sm:grid-cols-[10rem_1fr] sm:gap-6">
+            <dt className="text-sm leading-7 text-muted-foreground">
               Activities
             </dt>
             <dd>
-              <ul className="list-disc space-y-1 pl-5 text-foreground/80 marker:text-muted-foreground">
+              <ul className="list-disc pl-5 leading-7 text-foreground/80 marker:text-muted-foreground">
                 {site.activities.map((activity) => (
                   <li key={activity}>{activity}</li>
                 ))}

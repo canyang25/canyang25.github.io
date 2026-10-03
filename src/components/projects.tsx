@@ -1,30 +1,13 @@
-import { ArrowUpRight } from "lucide-react"
-
 import { site, type Project } from "@/content"
-import { GitHubIcon } from "@/components/github-icon"
 import { Section } from "@/components/section"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 
 export function Projects() {
   return (
-    <Section
-      id="projects"
-      title="Selected projects"
-      description="Highlights from my GitHub, from a distributed MapReduce runtime to autonomous LLM agents."
-    >
-      <ul className="grid gap-4 sm:grid-cols-2">
+    <Section id="projects" title="Projects">
+      <ul className="space-y-10">
         {site.projects.map((project) => (
           <li key={project.name}>
-            <ProjectCard project={project} />
+            <ProjectEntry project={project} />
           </li>
         ))}
       </ul>
@@ -32,52 +15,45 @@ export function Projects() {
   )
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectEntry({ project }: { project: Project }) {
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle className="font-semibold">{project.name}</CardTitle>
+    <>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h3 className="font-medium">{project.name}</h3>
         {(project.url || project.repo) && (
-          <CardAction className="-mt-1.5 -mr-1.5 flex">
+          <p className="flex gap-4 text-sm">
             {project.url && (
-              <Button variant="ghost" size="icon-sm" asChild>
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Open ${project.name}`}
-                >
-                  <ArrowUpRight />
-                </a>
-              </Button>
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Live site for ${project.name}`}
+                className="link"
+              >
+                Live site
+              </a>
             )}
             {project.repo && (
-              <Button variant="ghost" size="icon-sm" asChild>
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Source code for ${project.name}`}
-                >
-                  <GitHubIcon />
-                </a>
-              </Button>
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${project.name} on GitHub`}
+                className="link"
+              >
+                GitHub
+              </a>
             )}
-          </CardAction>
+          </p>
         )}
-        <CardDescription className="leading-relaxed">
-          {project.description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="mt-auto">
-        <ul className="flex flex-wrap gap-1.5" aria-label="Built with">
-          {project.tags.map((tag) => (
-            <li key={tag}>
-              <Badge variant="secondary">{tag}</Badge>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+      </div>
+      <p className="mt-1 leading-7 text-pretty text-foreground/80">
+        {project.description}
+      </p>
+      <p className="mt-2 text-sm text-muted-foreground">
+        <span className="sr-only">Built with: </span>
+        {project.tags.join(", ")}
+      </p>
+    </>
   )
 }

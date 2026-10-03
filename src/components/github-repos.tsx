@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ArrowRight, BookMarked, GitFork, RefreshCw, Star } from "lucide-react"
+import { GitFork, RefreshCw, Star } from "lucide-react"
 
 import { site } from "@/content"
 import {
@@ -11,13 +11,6 @@ import {
 } from "@/lib/github"
 import { Section } from "@/components/section"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 
 const VISIBLE_REPOS = 6
@@ -48,7 +41,7 @@ export function GitHubRepos() {
             href={profileUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-medium text-foreground underline-offset-4 hover:underline"
+            className="link"
           >
             github.com/{site.githubUsername}
           </a>
@@ -102,21 +95,11 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
     return (
       <div role="status">
         <span className="sr-only">Loading repositories…</span>
-        <ul className="grid gap-4 sm:grid-cols-2" aria-hidden="true">
+        <ul className="space-y-6" aria-hidden="true">
           {Array.from({ length: 4 }, (_, index) => (
-            <li key={index}>
-              <Card size="sm" className="h-full">
-                <CardHeader className="gap-2.5">
-                  <Skeleton className="h-4 w-2/5" />
-                  <Skeleton className="h-3 w-full" />
-                  <Skeleton className="h-3 w-3/4" />
-                </CardHeader>
-                <CardContent className="flex gap-4">
-                  <Skeleton className="h-3 w-16" />
-                  <Skeleton className="h-3 w-10" />
-                  <Skeleton className="h-3 w-24" />
-                </CardContent>
-              </Card>
+            <li key={index} className="space-y-2.5">
+              <Skeleton className="h-4 w-48" />
+              <Skeleton className="h-3.5 w-full" />
             </li>
           ))}
         </ul>
@@ -126,15 +109,10 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
 
   if (state.status === "error") {
     return (
-      <div
-        role="alert"
-        className="flex flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-10 text-center"
-      >
+      <div role="alert">
         <p className="font-medium">Couldn't load repositories</p>
-        <p className="max-w-sm text-sm text-muted-foreground">
-          {state.message}
-        </p>
-        <Button variant="outline" className="mt-1" onClick={onRetry}>
+        <p className="mt-1 text-sm text-muted-foreground">{state.message}</p>
+        <Button variant="outline" className="mt-4" onClick={onRetry}>
           <RefreshCw />
           Try again
         </Button>
@@ -144,10 +122,9 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
 
   if (state.repos.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed px-6 py-10 text-center">
-        <BookMarked className="size-5 text-muted-foreground" />
+      <div>
         <p className="font-medium">No other public repositories yet</p>
-        <p className="max-w-sm text-sm text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           New projects will show up here as soon as they're public on GitHub.
         </p>
       </div>
@@ -156,10 +133,10 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
 
   return (
     <div>
-      <ul className="grid gap-4 sm:grid-cols-2">
+      <ul className="space-y-6">
         {state.repos.map((repo) => (
           <li key={repo.id}>
-            <RepoCard repo={repo} now={state.fetchedAt} />
+            <RepoEntry repo={repo} now={state.fetchedAt} />
           </li>
         ))}
       </ul>
@@ -167,59 +144,58 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
         href={`${profileUrl}?tab=repositories`}
         target="_blank"
         rel="noreferrer"
-        className="group mt-6 inline-flex items-center gap-1.5 rounded-md text-sm font-medium outline-none hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="mt-8 inline-block link text-sm"
       >
-        View all repositories
-        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        View all repositories on GitHub
       </a>
     </div>
   )
 }
 
-function RepoCard({ repo, now }: { repo: Repo; now: number }) {
+function RepoEntry({ repo, now }: { repo: Repo; now: number }) {
   return (
     <a
       href={repo.html_url}
       target="_blank"
       rel="noreferrer"
-      className="group block h-full rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      className="group block rounded-xs outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      <Card
-        size="sm"
-        className="h-full transition-[box-shadow,translate] group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:ring-foreground/20"
-      >
-        <CardHeader>
-          <CardTitle className="flex min-w-0 items-center gap-2 font-mono text-sm font-medium">
-            <BookMarked className="size-4 shrink-0 text-muted-foreground" />
-            <span className="truncate group-hover:underline">{repo.name}</span>
-          </CardTitle>
-          <CardDescription className="line-clamp-2 leading-relaxed">
-            {repo.description ?? "No description provided."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+      <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <span className="font-mono text-sm break-all underline decoration-foreground/30 underline-offset-4 transition-colors group-hover:decoration-foreground">
+          {repo.name}
+        </span>
+        <span className="flex flex-wrap items-center gap-x-3 text-xs text-muted-foreground">
           {repo.language && (
             <span className="inline-flex items-center gap-1.5">
               <span
-                className="size-2.5 rounded-full"
+                className="size-2 rounded-full"
                 style={{ backgroundColor: languageColor(repo.language) }}
               />
               {repo.language}
             </span>
           )}
-          <span className="inline-flex items-center gap-1">
-            <Star className="size-3.5" />
-            <span className="sr-only">Stars:</span>
-            {compactNumber.format(repo.stargazers_count)}
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <GitFork className="size-3.5" />
-            <span className="sr-only">Forks:</span>
-            {compactNumber.format(repo.forks_count)}
-          </span>
+          {repo.stargazers_count > 0 && (
+            <span className="inline-flex items-center gap-1">
+              <Star className="size-3.5" />
+              <span className="sr-only">Stars:</span>
+              {compactNumber.format(repo.stargazers_count)}
+            </span>
+          )}
+          {repo.forks_count > 0 && (
+            <span className="inline-flex items-center gap-1">
+              <GitFork className="size-3.5" />
+              <span className="sr-only">Forks:</span>
+              {compactNumber.format(repo.forks_count)}
+            </span>
+          )}
           <span>Updated {timeAgo(repo.pushed_at, now)}</span>
-        </CardContent>
-      </Card>
+        </span>
+      </span>
+      {repo.description && (
+        <span className="mt-1 line-clamp-2 text-sm leading-6 text-foreground/80">
+          {repo.description}
+        </span>
+      )}
     </a>
   )
 }
