@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Moon, Sun } from "lucide-react"
 
 import { useTheme } from "@/components/theme-provider"
@@ -14,6 +14,8 @@ const NAV_ITEMS = [
 
 function useActiveSection() {
   const [active, setActive] = useState(NAV_ITEMS[0].href)
+  const scrollingTo = useRef<string | null>(null)
+  const motion = useRef(0)
 
   useEffect(() => {
     const sections = NAV_ITEMS.flatMap((item) => {
@@ -23,6 +25,7 @@ function useActiveSection() {
     if (sections.length === 0) return
 
     const update = () => {
+      if (scrollingTo.current) return
       const line = 112
       let current = NAV_ITEMS[0].href
       for (const section of sections) {
@@ -37,20 +40,76 @@ function useActiveSection() {
       setActive(current)
     }
 
+    const release = () => {
+      motion.current += 1
+      scrollingTo.current = null
+      update()
+    }
+
     update()
     window.addEventListener("scroll", update, { passive: true })
     window.addEventListener("resize", update)
+    window.addEventListener("wheel", release, { passive: true })
+    window.addEventListener("touchmove", release, { passive: true })
     return () => {
       window.removeEventListener("scroll", update)
       window.removeEventListener("resize", update)
+      window.removeEventListener("wheel", release)
+      window.removeEventListener("touchmove", release)
     }
   }, [])
 
-  return active
+  function navigate(href: string) {
+    const section = document.querySelector(href)
+    if (!(section instanceof HTMLElement)) return
+
+    scrollingTo.current = href
+    setActive(href)
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const offset = window.matchMedia("(min-width: 640px)").matches ? 32 : 80
+    const max = Math.max(
+      0,
+      document.documentElement.scrollHeight - window.innerHeight
+    )
+    const top = Math.min(
+      max,
+      Math.max(0, section.getBoundingClientRect().top + window.scrollY - offset)
+    )
+    const frame = ++motion.current
+
+    if (reduce || Math.abs(top - window.scrollY) < 2) {
+      window.scrollTo({ top, behavior: "instant" })
+      if (scrollingTo.current === href) scrollingTo.current = null
+      return
+    }
+
+    const start = window.scrollY
+    const distance = top - start
+    const duration = Math.min(1000, Math.max(480, Math.abs(distance) * 0.5))
+    const startTime = performance.now()
+
+    const tick = (now: number) => {
+      if (motion.current !== frame) return
+      const t = Math.min(1, (now - startTime) / duration)
+      const eased = t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2
+      window.scrollTo({
+        top: start + distance * eased,
+        behavior: "instant",
+      })
+      if (t < 1) {
+        requestAnimationFrame(tick)
+        return
+      }
+      if (scrollingTo.current === href) scrollingTo.current = null
+    }
+    requestAnimationFrame(tick)
+  }
+
+  return { active, navigate }
 }
 
 export function SiteShell({ children }: { children: ReactNode }) {
-  const active = useActiveSection()
+  const { active, navigate } = useActiveSection()
 
   return (
     <>
@@ -59,6 +118,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <nav aria-label="Main" className="min-w-0">
             <NavLinks
               active={active}
+              navigate={navigate}
               className="flex flex-wrap gap-x-3 gap-y-1"
             />
           </nav>
@@ -68,7 +128,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <div className="mx-auto flex w-full max-w-[52rem]">
         <aside className="sticky top-0 hidden w-40 shrink-0 self-start px-6 pt-16 sm:block">
           <nav aria-label="Main">
-            <NavLinks active={active} className="flex flex-col gap-3" />
+            <NavLinks
+              active={active}
+              navigate={navigate}
+              className="flex flex-col gap-3"
+            />
           </nav>
           <div className="mt-4">
             <ThemeToggle />
@@ -82,9 +146,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
 function NavLinks({
   active,
+  navigate,
   className,
 }: {
   active: string
+  navigate: (href: string) => void
   className: string
 }) {
   return (
@@ -96,6 +162,10 @@ function NavLinks({
             <a
               href={item.href}
               aria-current={isActive ? "location" : undefined}
+              onClick={(event) => {
+                event.preventDefault()
+                navigate(item.href)
+              }}
               className={`rounded-xs text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
                 isActive
                   ? "text-foreground"
