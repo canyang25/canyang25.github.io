@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 
 const NAV_ITEMS = [
   { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
 ]
 
 function useActiveSection() {
@@ -22,7 +22,7 @@ function useActiveSection() {
     if (sections.length === 0) return
 
     const update = () => {
-      const line = window.innerHeight * 0.3
+      const line = 112
       let current = NAV_ITEMS[0].href
       for (const section of sections) {
         if (section.getBoundingClientRect().top <= line) {

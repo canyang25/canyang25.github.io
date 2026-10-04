@@ -21,11 +21,11 @@ export function App() {
         <main id="main">
           <Hero />
           <About />
+          <Contact />
           <Experience />
           <Projects />
           <GitHubRepos />
           <Education />
-          <Contact />
         </main>
         <SiteFooter />
       </SiteShell>

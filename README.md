@@ -1,6 +1,6 @@
 # Preston Zhao's personal site
 
-The source for Preston (Canyang) Zhao's one-page personal website: intro, about, experience, featured projects, more repositories pulled live from GitHub, education, and contact. It's built with React, TypeScript, Tailwind CSS, and shadcn/ui, and set up to publish on **GitHub Pages** at `https://canyang25.github.io`.
+The source for Preston (Canyang) Zhao's one-page personal website: intro, about, contact, experience, featured projects, more repositories pulled live from GitHub, and education. It's built with React, TypeScript, Tailwind CSS, and shadcn/ui, and set up to publish on **GitHub Pages** at `https://canyang25.github.io`.
 
 ## Edit the content
 
