@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react"
-import { Check, Copy } from "lucide-react"
 
 import { site } from "@/content"
 import { Section } from "@/components/section"
-import { Button } from "@/components/ui/button"
 
 export function Contact() {
   return (
     <Section id="contact" title="Contact">
       <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-        <li className="flex items-center gap-2">
-          <a href={`mailto:${site.email}`} className="link break-all">
-            {site.email}
-          </a>
-          <CopyEmailButton />
-        </li>
+        <EmailLink />
         {site.links.map((link) => (
           <li key={link.href}>
             <a
@@ -42,45 +35,37 @@ export function Contact() {
   )
 }
 
-const COPY_LABELS = {
-  idle: "Copy",
-  copied: "Copied",
-  failed: "Couldn't copy",
-}
-
-function CopyEmailButton() {
-  const [state, setState] = useState<keyof typeof COPY_LABELS>("idle")
+function EmailLink() {
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    if (state === "idle") return
-    const timeout = setTimeout(() => setState("idle"), 2000)
+    if (!copied) return
+    const timeout = setTimeout(() => setCopied(false), 2000)
     return () => clearTimeout(timeout)
-  }, [state])
-
-  async function copyEmail() {
-    try {
-      await navigator.clipboard.writeText(site.email)
-      setState("copied")
-    } catch {
-      setState("failed")
-    }
-  }
+  }, [copied])
 
   return (
-    <>
-      <Button
-        size="sm"
-        variant="outline"
-        aria-label="Copy email address"
-        onClick={copyEmail}
+    <li className="flex items-center gap-2">
+      <a
+        href={`mailto:${site.email}`}
+        className="link break-all"
+        onClick={() => {
+          navigator.clipboard.writeText(site.email).then(
+            () => setCopied(true),
+            () => setCopied(false)
+          )
+        }}
       >
-        {state === "copied" ? <Check /> : <Copy />}
-        {COPY_LABELS[state]}
-      </Button>
+        {site.email}
+      </a>
       <span role="status" className="sr-only">
-        {state === "copied" && "Email address copied"}
-        {state === "failed" && "Couldn't copy the email address"}
+        {copied ? "Email address copied" : ""}
       </span>
-    </>
+      {copied && (
+        <span className="text-sm text-muted-foreground" aria-hidden="true">
+          Copied
+        </span>
+      )}
+    </li>
   )
 }
