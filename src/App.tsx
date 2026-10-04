@@ -6,7 +6,7 @@ import { GitHubRepos } from "@/components/github-repos"
 import { Hero } from "@/components/hero"
 import { Projects } from "@/components/projects"
 import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
+import { SiteShell } from "@/components/site-header"
 
 export function App() {
   return (
@@ -17,17 +17,18 @@ export function App() {
       >
         Skip to content
       </a>
-      <SiteHeader />
-      <main id="main">
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <GitHubRepos />
-        <Education />
-        <Contact />
-      </main>
-      <SiteFooter />
+      <SiteShell>
+        <main id="main">
+          <Hero />
+          <About />
+          <Experience />
+          <Projects />
+          <GitHubRepos />
+          <Education />
+          <Contact />
+        </main>
+        <SiteFooter />
+      </SiteShell>
     </div>
   )
 }

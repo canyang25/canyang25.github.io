@@ -14,7 +14,18 @@ export function Education() {
               {degree.period}
             </p>
             <div>
-              <h3 className="leading-7 font-medium">{degree.degree}</h3>
+              <h3 className="flex items-center gap-2.5 leading-7 font-medium">
+                {degree.mark && (
+                  <img
+                    src={degree.mark}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="size-9 shrink-0 rounded-xs"
+                  />
+                )}
+                <span>{degree.degree}</span>
+              </h3>
               <p className="leading-7 text-foreground/80">{degree.school}</p>
               {degree.detail && (
                 <p className="leading-7 text-muted-foreground">
