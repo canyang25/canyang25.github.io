@@ -14,7 +14,7 @@ export const site: Site = {
   githubUsername,
 
   // Shown under your intro. Set to null to hide it.
-  status: "Seeking Summer 2027 internships",
+  status: "Seeking Summer 2027 internships in software, data, or AI/ML",
 
   intro:
     "I build software, data, and AI/ML systems: production web platforms and job queues, data pipelines and ranking models, and tool-calling LLM agents.",
