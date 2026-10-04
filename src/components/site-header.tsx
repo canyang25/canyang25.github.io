@@ -21,18 +21,28 @@ function useActiveSection() {
     })
     if (sections.length === 0) return
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (visible?.target.id) setActive(`#${visible.target.id}`)
-      },
-      { rootMargin: "-15% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
-    )
+    const update = () => {
+      const line = window.innerHeight * 0.3
+      let current = NAV_ITEMS[0].href
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= line) {
+          current = `#${section.id}`
+        }
+      }
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 4
+      if (atBottom) current = NAV_ITEMS[NAV_ITEMS.length - 1].href
+      setActive(current)
+    }
 
-    for (const section of sections) observer.observe(section)
-    return () => observer.disconnect()
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
   }, [])
 
   return active
@@ -55,11 +65,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
         </div>
       </div>
       <div className="mx-auto flex w-full max-w-[52rem]">
-        <aside className="sticky top-0 hidden h-svh w-40 shrink-0 flex-col self-start px-6 py-16 sm:flex">
+        <aside className="sticky top-0 hidden w-40 shrink-0 self-start px-6 pt-16 sm:block">
           <nav aria-label="Main">
             <NavLinks active={active} className="flex flex-col gap-3" />
           </nav>
-          <div className="mt-auto">
+          <div className="mt-4">
             <ThemeToggle />
           </div>
         </aside>

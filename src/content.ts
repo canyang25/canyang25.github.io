@@ -92,6 +92,7 @@ export const site: Site = {
       tags: ["Python", "LangGraph", "LangChain", "Pydantic", "Docker"],
       repo: `https://github.com/${githubUsername}/BadgerForge`,
       image: "/images/badgerforge.png",
+      imageFit: "contain",
     },
     {
       name: "NASA APOD Service",
@@ -207,6 +208,8 @@ export type Project = {
   url?: string
   repo?: string
   image?: string
+  // "contain" keeps the whole picture visible. The default crops to fill.
+  imageFit?: "cover" | "contain"
 }
 
 export type Role = {

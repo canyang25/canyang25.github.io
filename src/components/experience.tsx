@@ -13,23 +13,21 @@ export function Experience() {
             <div className="text-sm leading-7 text-muted-foreground">
               <p className="tabular-nums">{role.period}</p>
               <p className="leading-5">{role.location}</p>
+              {role.logo && (
+                <img
+                  src={role.logo}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="mt-2 h-8 w-auto max-w-40 object-contain object-left"
+                />
+              )}
             </div>
             <div>
               <h3 className="leading-7 font-medium">
                 {role.title}
                 <span className="text-muted-foreground"> · </span>
-                <span className="inline-flex items-center gap-2 align-bottom">
-                  {role.logo && (
-                    <img
-                      src={role.logo}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      className="h-5 w-auto max-w-32 rounded-xs border border-border bg-white object-contain px-1"
-                    />
-                  )}
-                  {role.org}
-                </span>
+                {role.org}
               </h3>
               <ul className="mt-2 list-disc space-y-2 pl-5 leading-7 text-pretty text-foreground/80 marker:text-muted-foreground">
                 {role.highlights.map((highlight) => (

@@ -62,7 +62,11 @@ function ProjectEntry({ project }: { project: Project }) {
           alt=""
           loading="lazy"
           decoding="async"
-          className="aspect-[3/2] w-20 shrink-0 rounded-sm border border-border object-cover sm:w-36"
+          className={`w-24 shrink-0 rounded-sm border border-border sm:w-40 ${
+            project.imageFit === "contain"
+              ? "h-auto"
+              : "aspect-[3/2] object-cover"
+          }`}
         />
       )}
     </div>
