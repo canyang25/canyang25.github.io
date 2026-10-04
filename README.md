@@ -1,13 +1,13 @@
 # Preston Zhao's personal site
 
-The source for Preston (Canyang) Zhao's one-page personal website: intro, about, contact, experience, featured projects, more repositories pulled live from GitHub, and education. It's built with React, TypeScript, Tailwind CSS, and shadcn/ui, and set up to publish on **GitHub Pages** at `https://canyang25.github.io`.
+The source for Preston (Canyang) Zhao's one-page personal website: intro, about, contact, experience, featured projects, and education. It's built with React, TypeScript, Tailwind CSS, and shadcn/ui, and set up to publish on **GitHub Pages** at `https://canyang25.github.io`.
 
 ## Edit the content
 
 Everything the page says lives in [`src/content.ts`](src/content.ts): name, intro, links, projects, experience, and education. Edit that file and the page, browser tab title, and favicon all update.
 
-- `githubUsername` drives the avatar, the GitHub links, and the "More on GitHub" section, which lists public repositories live from the GitHub API (forks and archived repositories are skipped).
-- Repositories linked from `projects` are featured under "Projects" and left out of "More on GitHub", so each one appears only once.
+- `githubUsername` drives the avatar and the GitHub link under Contact.
+- Each project links to its repository from the project title.
 - Set `status` to `null` to hide the line under the intro.
 - The contact section links to `public/resume.pdf`. Replace that file to update the download.
 - `image`, `logo`, and `mark` point at files in `public/` (for example `public/images/mapreduce.png`). Project pictures sit to the right of the write-up. Company logos and the school mark sit beside the entry.
@@ -54,7 +54,6 @@ src/
   App.tsx             Page layout (section order)
   components/         Header, hero, sections, and footer
   components/ui/      shadcn/ui primitives
-  lib/github.ts       GitHub API client for the "More on GitHub" section
 .github/workflows/
   deploy.yml          Builds and deploys to GitHub Pages
 ```

@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { label: "Contact", href: "#contact" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Education", href: "#education" },
 ]
 
 function useActiveSection() {

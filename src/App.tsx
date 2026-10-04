@@ -2,7 +2,6 @@ import { About } from "@/components/about"
 import { Contact } from "@/components/contact"
 import { Education } from "@/components/education"
 import { Experience } from "@/components/experience"
-import { GitHubRepos } from "@/components/github-repos"
 import { Hero } from "@/components/hero"
 import { Projects } from "@/components/projects"
 import { SiteFooter } from "@/components/site-footer"
@@ -24,7 +23,6 @@ export function App() {
           <Contact />
           <Experience />
           <Projects />
-          <GitHubRepos />
           <Education />
         </main>
         <SiteFooter />

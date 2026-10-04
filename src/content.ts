@@ -1,7 +1,7 @@
 // Everything the site says lives in this file: edit it, save, and the page
 // updates.
 
-// Powers your avatar, GitHub links, and the "More on GitHub" section.
+// Powers your avatar and the GitHub link under Contact.
 const githubUsername = "canyang25"
 
 export const site: Site = {
@@ -28,7 +28,6 @@ export const site: Site = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/preston-zhao" },
   ],
 
-  // Repositories linked here are left out of the "More on GitHub" section.
   // image, logo, and mark are files in public/, shown beside the entry.
   projects: [
     {
