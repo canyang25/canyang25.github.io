@@ -16,38 +16,20 @@ export function Projects() {
 }
 
 function ProjectEntry({ project }: { project: Project }) {
+  const href = project.repo ?? project.url
+
   return (
     <div className="flex items-start gap-4">
       <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          <h3 className="font-medium">{project.name}</h3>
-          {(project.url || project.repo) && (
-            <p className="flex gap-4 text-sm">
-              {project.url && (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Live site for ${project.name}`}
-                  className="link"
-                >
-                  Live site
-                </a>
-              )}
-              {project.repo && (
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`${project.name} on GitHub`}
-                  className="link"
-                >
-                  GitHub
-                </a>
-              )}
-            </p>
+        <h3 className="font-medium">
+          {href ? (
+            <a href={href} target="_blank" rel="noreferrer" className="link">
+              {project.name}
+            </a>
+          ) : (
+            project.name
           )}
-        </div>
+        </h3>
         <p className="mt-1 leading-7 text-pretty text-foreground/80">
           {project.description}
         </p>

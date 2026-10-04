@@ -23,51 +23,6 @@ export const site: Site = {
     "Most recently, I built a research analysis platform and an ML ranking service as a software development intern at Bio-Techne. Before that, I fine-tuned tool-calling LLMs at AI Rudder and built Snowflake data pipelines at Turning Green. I'm looking for a Summer 2027 internship in software, data, or AI/ML development.",
   ],
 
-  skills: [
-    {
-      label: "Programming languages",
-      items: ["Python", "C++", "SQL", "TypeScript", "JavaScript"],
-    },
-    {
-      label: "Cloud & tools",
-      items: [
-        "Azure",
-        "AWS (S3, Redshift)",
-        "Snowflake",
-        "Docker",
-        "Celery",
-        "Airbyte",
-        "dbt",
-        "PySpark",
-        "PostgreSQL",
-        "Databricks",
-      ],
-    },
-    {
-      label: "AI / LLM",
-      items: [
-        "LoRA / SFT",
-        "LangChain",
-        "LangGraph",
-        "Agentic tool calling",
-        "Function-call evaluation",
-        "LLM-as-a-judge",
-        "RAG",
-      ],
-    },
-    {
-      label: "Analytics",
-      items: [
-        "XGBoost",
-        "Isolation Forest",
-        "EDA",
-        "Time series",
-        "Anomaly detection",
-        "Feature engineering",
-      ],
-    },
-  ],
-
   // Extra links next to your email and GitHub at the top of the page.
   links: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/preston-zhao" },
@@ -154,7 +109,7 @@ export const site: Site = {
   education: [
     {
       period: "Expected Dec 2027",
-      degree: "M.S. in Biomedical Data Science",
+      degree: "M.S. in Data Science",
       school: "University of Wisconsin–Madison",
       detail: "Computer science and machine learning focus",
       mark: "/images/uw-madison.png",
@@ -192,7 +147,6 @@ export type Site = {
   status: string | null
   intro: string
   about: string[]
-  skills: { label: string; items: string[] }[]
   links: { label: string; href: string }[]
   projects: Project[]
   experience: Role[]
