@@ -17,43 +17,54 @@ export function Projects() {
 
 function ProjectEntry({ project }: { project: Project }) {
   return (
-    <>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-        <h3 className="font-medium">{project.name}</h3>
-        {(project.url || project.repo) && (
-          <p className="flex gap-4 text-sm">
-            {project.url && (
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Live site for ${project.name}`}
-                className="link"
-              >
-                Live site
-              </a>
-            )}
-            {project.repo && (
-              <a
-                href={project.repo}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${project.name} on GitHub`}
-                className="link"
-              >
-                GitHub
-              </a>
-            )}
-          </p>
-        )}
+    <div className="flex items-start gap-4">
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 className="font-medium">{project.name}</h3>
+          {(project.url || project.repo) && (
+            <p className="flex gap-4 text-sm">
+              {project.url && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Live site for ${project.name}`}
+                  className="link"
+                >
+                  Live site
+                </a>
+              )}
+              {project.repo && (
+                <a
+                  href={project.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${project.name} on GitHub`}
+                  className="link"
+                >
+                  GitHub
+                </a>
+              )}
+            </p>
+          )}
+        </div>
+        <p className="mt-1 leading-7 text-pretty text-foreground/80">
+          {project.description}
+        </p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          <span className="sr-only">Built with: </span>
+          {project.tags.join(", ")}
+        </p>
       </div>
-      <p className="mt-1 leading-7 text-pretty text-foreground/80">
-        {project.description}
-      </p>
-      <p className="mt-2 text-sm text-muted-foreground">
-        <span className="sr-only">Built with: </span>
-        {project.tags.join(", ")}
-      </p>
-    </>
+      {project.image && (
+        <img
+          src={project.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="aspect-[3/2] w-20 shrink-0 rounded-sm border border-border object-cover sm:w-36"
+        />
+      )}
+    </div>
   )
 }

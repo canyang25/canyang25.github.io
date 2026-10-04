@@ -18,7 +18,18 @@ export function Experience() {
               <h3 className="leading-7 font-medium">
                 {role.title}
                 <span className="text-muted-foreground"> · </span>
-                {role.org}
+                <span className="inline-flex items-center gap-2 align-bottom">
+                  {role.logo && (
+                    <img
+                      src={role.logo}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="h-5 w-auto max-w-32 rounded-xs border border-border bg-white object-contain px-1"
+                    />
+                  )}
+                  {role.org}
+                </span>
               </h3>
               <ul className="mt-2 list-disc space-y-2 pl-5 leading-7 text-pretty text-foreground/80 marker:text-muted-foreground">
                 {role.highlights.map((highlight) => (

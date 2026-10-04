@@ -1,18 +1,8 @@
-import { useRef } from "react"
-import { Menu, Moon, Sun } from "lucide-react"
+import { useEffect, useState, type ReactNode } from "react"
+import { Moon, Sun } from "lucide-react"
 
-import { site } from "@/content"
 import { useTheme } from "@/components/theme-provider"
 import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
 
 const NAV_ITEMS = [
   { label: "About", href: "#about" },
@@ -21,26 +11,92 @@ const NAV_ITEMS = [
   { label: "Contact", href: "#contact" },
 ]
 
-export function SiteHeader() {
+function useActiveSection() {
+  const [active, setActive] = useState(NAV_ITEMS[0].href)
+
+  useEffect(() => {
+    const sections = NAV_ITEMS.flatMap((item) => {
+      const section = document.querySelector(item.href)
+      return section instanceof HTMLElement ? [section] : []
+    })
+    if (sections.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible?.target.id) setActive(`#${visible.target.id}`)
+      },
+      { rootMargin: "-15% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
+    )
+
+    for (const section of sections) observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
+
+  return active
+}
+
+export function SiteShell({ children }: { children: ReactNode }) {
+  const active = useActiveSection()
+
   return (
-    <header className="mx-auto flex max-w-2xl items-center justify-end gap-3 px-6 pt-6">
-      <nav aria-label="Main" className="hidden sm:block">
-        <ul className="flex items-center gap-5 text-sm">
-          {NAV_ITEMS.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className="rounded-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <ThemeToggle />
-      <MobileNav />
-    </header>
+    <>
+      <div className="sticky top-0 z-30 border-b bg-background sm:hidden">
+        <div className="flex items-center justify-between gap-3 px-6 py-3">
+          <nav aria-label="Main" className="min-w-0">
+            <NavLinks
+              active={active}
+              className="flex flex-wrap gap-x-3 gap-y-1"
+            />
+          </nav>
+          <ThemeToggle />
+        </div>
+      </div>
+      <div className="mx-auto flex w-full max-w-[52rem]">
+        <aside className="sticky top-0 hidden h-svh w-40 shrink-0 flex-col self-start px-6 py-16 sm:flex">
+          <nav aria-label="Main">
+            <NavLinks active={active} className="flex flex-col gap-3" />
+          </nav>
+          <div className="mt-auto">
+            <ThemeToggle />
+          </div>
+        </aside>
+        <div className="min-w-0 flex-1">{children}</div>
+      </div>
+    </>
+  )
+}
+
+function NavLinks({
+  active,
+  className,
+}: {
+  active: string
+  className: string
+}) {
+  return (
+    <ul className={className}>
+      {NAV_ITEMS.map((item) => {
+        const isActive = active === item.href
+        return (
+          <li key={item.href}>
+            <a
+              href={item.href}
+              aria-current={isActive ? "location" : undefined}
+              className={`rounded-xs text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
+                isActive
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {item.label}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 
@@ -61,56 +117,5 @@ function ThemeToggle() {
       <Sun className="dark:hidden" />
       <Moon className="hidden dark:block" />
     </Button>
-  )
-}
-
-function MobileNav() {
-  const choseSection = useRef(false)
-
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="sm:hidden"
-          aria-label="Open menu"
-        >
-          <Menu />
-        </Button>
-      </SheetTrigger>
-      <SheetContent
-        side="right"
-        className="w-72"
-        onCloseAutoFocus={(event) => {
-          // The menu button sits at the top of the page, so focusing it again
-          // would scroll back up and undo the jump to the chosen section.
-          if (choseSection.current) event.preventDefault()
-          choseSection.current = false
-        }}
-      >
-        <SheetHeader>
-          <SheetTitle>{site.name}</SheetTitle>
-          <SheetDescription>Jump to a section</SheetDescription>
-        </SheetHeader>
-        <nav aria-label="Mobile" className="px-2">
-          <ul className="grid gap-1">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.href}>
-                <SheetClose asChild>
-                  <a
-                    href={item.href}
-                    onClick={() => (choseSection.current = true)}
-                    className="block rounded-md px-3 py-2.5 text-base transition-colors outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50"
-                  >
-                    {item.label}
-                  </a>
-                </SheetClose>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </SheetContent>
-    </Sheet>
   )
 }

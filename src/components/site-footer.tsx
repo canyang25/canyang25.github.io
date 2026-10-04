@@ -4,7 +4,7 @@ const YEAR = new Date().getFullYear()
 
 export function SiteFooter() {
   return (
-    <footer className="mx-auto max-w-2xl px-6">
+    <footer className="px-6">
       <div className="flex flex-col gap-4 border-t py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
         <p>
           © {YEAR} {site.name}. Built with React and Tailwind CSS, hosted on
