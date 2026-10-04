@@ -16,7 +16,7 @@ export function Experience() {
               {role.logo && (
                 <img
                   src={role.logo}
-                  alt=""
+                  alt={role.org}
                   loading="lazy"
                   decoding="async"
                   className="mt-2 h-8 w-auto max-w-40 object-contain object-left"
@@ -26,8 +26,12 @@ export function Experience() {
             <div>
               <h3 className="leading-7 font-medium">
                 {role.title}
-                <span className="text-muted-foreground"> · </span>
-                {role.org}
+                {!role.logo && (
+                  <>
+                    <span className="text-muted-foreground"> · </span>
+                    {role.org}
+                  </>
+                )}
               </h3>
               <ul className="mt-2 list-disc space-y-2 pl-5 leading-7 text-pretty text-foreground/80 marker:text-muted-foreground">
                 {role.highlights.map((highlight) => (

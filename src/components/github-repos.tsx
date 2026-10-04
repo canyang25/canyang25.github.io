@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react"
-import { GitFork, RefreshCw, Star } from "lucide-react"
+import { RefreshCw } from "lucide-react"
 
 import { site } from "@/content"
-import {
-  compactNumber,
-  fetchRepos,
-  languageColor,
-  timeAgo,
-  type Repo,
-} from "@/lib/github"
+import { fetchRepos, languageColor, type Repo } from "@/lib/github"
 import { Section } from "@/components/section"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -24,7 +18,7 @@ const featuredRepos = new Set(
 type ReposState =
   | { status: "loading" }
   | { status: "error"; message: string }
-  | { status: "ready"; repos: Repo[]; fetchedAt: number }
+  | { status: "ready"; repos: Repo[] }
 
 export function GitHubRepos() {
   const [attempt, setAttempt] = useState(0)
@@ -75,9 +69,12 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
         setState({
           status: "ready",
           repos: repos
-            .filter((repo) => !featuredRepos.has(repo.html_url.toLowerCase()))
+            .filter(
+              (repo) =>
+                !featuredRepos.has(repo.html_url.toLowerCase()) &&
+                !repo.name.toLowerCase().endsWith(".github.io")
+            )
             .slice(0, VISIBLE_REPOS),
-          fetchedAt: Date.now(),
         })
       )
       .catch((error: unknown) => {
@@ -136,7 +133,7 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
       <ul className="space-y-6">
         {state.repos.map((repo) => (
           <li key={repo.id}>
-            <RepoEntry repo={repo} now={state.fetchedAt} />
+            <RepoEntry repo={repo} />
           </li>
         ))}
       </ul>
@@ -152,7 +149,7 @@ function RepoGrid({ username, profileUrl, onRetry }: RepoGridProps) {
   )
 }
 
-function RepoEntry({ repo, now }: { repo: Repo; now: number }) {
+function RepoEntry({ repo }: { repo: Repo }) {
   return (
     <a
       href={repo.html_url}
@@ -160,36 +157,19 @@ function RepoEntry({ repo, now }: { repo: Repo; now: number }) {
       rel="noreferrer"
       className="group block rounded-xs outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
         <span className="font-mono text-sm break-all underline decoration-foreground/30 underline-offset-4 transition-colors group-hover:decoration-foreground">
           {repo.name}
         </span>
-        <span className="flex flex-wrap items-center gap-x-3 text-xs text-muted-foreground">
-          {repo.language && (
-            <span className="inline-flex items-center gap-1.5">
-              <span
-                className="size-2 rounded-full"
-                style={{ backgroundColor: languageColor(repo.language) }}
-              />
-              {repo.language}
-            </span>
-          )}
-          {repo.stargazers_count > 0 && (
-            <span className="inline-flex items-center gap-1">
-              <Star className="size-3.5" />
-              <span className="sr-only">Stars:</span>
-              {compactNumber.format(repo.stargazers_count)}
-            </span>
-          )}
-          {repo.forks_count > 0 && (
-            <span className="inline-flex items-center gap-1">
-              <GitFork className="size-3.5" />
-              <span className="sr-only">Forks:</span>
-              {compactNumber.format(repo.forks_count)}
-            </span>
-          )}
-          <span>Updated {timeAgo(repo.pushed_at, now)}</span>
-        </span>
+        {repo.language && (
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span
+              className="size-2 rounded-full"
+              style={{ backgroundColor: languageColor(repo.language) }}
+            />
+            {repo.language}
+          </span>
+        )}
       </span>
       {repo.description && (
         <span className="mt-1 line-clamp-2 text-sm leading-6 text-foreground/80">

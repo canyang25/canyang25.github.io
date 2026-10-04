@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Check, Copy } from "lucide-react"
+import { Check, Copy, Download } from "lucide-react"
 
 import { site } from "@/content"
 import { Section } from "@/components/section"
@@ -9,9 +9,23 @@ export function Contact() {
   return (
     <Section id="contact" title="Contact">
       <p className="leading-7 text-foreground/80">
-        Email is the fastest way to reach me.
+        You can find my resume{" "}
+        <a
+          href={site.resume}
+          download="Preston-Zhao-Resume.pdf"
+          className="link"
+        >
+          here
+        </a>
+        .
       </p>
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <Button variant="outline" size="sm" asChild>
+          <a href={site.resume} download="Preston-Zhao-Resume.pdf">
+            <Download />
+            Download
+          </a>
+        </Button>
         <a href={`mailto:${site.email}`} className="link break-all">
           {site.email}
         </a>

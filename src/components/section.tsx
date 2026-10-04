@@ -14,10 +14,7 @@ export function Section({ id, title, description, children }: SectionProps) {
       aria-labelledby={`${id}-title`}
       className="scroll-mt-20 px-6 py-10 sm:scroll-mt-8 sm:py-12"
     >
-      <h2
-        id={`${id}-title`}
-        className="text-sm font-medium text-muted-foreground"
-      >
+      <h2 id={`${id}-title`} className="text-lg font-bold">
         {title}
       </h2>
       {description && (
