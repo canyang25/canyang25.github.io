@@ -8,23 +8,36 @@ import { Button } from "@/components/ui/button"
 export function Contact() {
   return (
     <Section id="contact" title="Contact">
-      <p className="leading-7 text-foreground/80">
-        You can find my resume{" "}
-        <a
-          href={site.resume}
-          download="Preston-Zhao-Resume.pdf"
-          className="link"
-        >
-          here
-        </a>
-        .
-      </p>
-      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-        <a href={`mailto:${site.email}`} className="link break-all">
-          {site.email}
-        </a>
-        <CopyEmailButton />
-      </div>
+      <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
+        <li className="flex items-center gap-2">
+          <a href={`mailto:${site.email}`} className="link break-all">
+            {site.email}
+          </a>
+          <CopyEmailButton />
+        </li>
+        {site.links.map((link) => (
+          <li key={link.href}>
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="link"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href={`https://github.com/${site.githubUsername}`}
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            GitHub
+          </a>
+        </li>
+      </ul>
     </Section>
   )
 }

@@ -8,12 +8,11 @@ export const site: Site = {
   name: "Preston (Canyang) Zhao",
   initials: "PZ",
   role: "Data science master's student at UW–Madison",
-  location: "Open to Relocate",
   email: "canyang.zhao2@gmail.com",
   resume: "/resume.pdf",
   githubUsername,
 
-  // Shown under your intro. Set to null to hide it.
+  // Shown under your role. Set to null to hide it.
   status: "Seeking Summer 2027 internships in software, data, or AI/ML",
 
   intro:
@@ -24,7 +23,7 @@ export const site: Site = {
     "Most recently, I built a research analysis platform and an ML ranking service as a software development intern at Bio-Techne. Before that, I fine-tuned tool-calling LLMs at AI Rudder and built Snowflake data pipelines at Turning Green. I'm looking for a Summer 2027 internship in software, data, or AI/ML development.",
   ],
 
-  // Extra links next to your email and GitHub at the top of the page.
+  // Extra links shown with your email and GitHub under Contact.
   links: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/preston-zhao" },
   ],
@@ -141,7 +140,6 @@ export type Site = {
   name: string
   initials: string
   role: string
-  location: string
   email: string
   resume: string
   githubUsername: string

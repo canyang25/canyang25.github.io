@@ -8,6 +8,17 @@ export function About() {
         {site.about.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
+        <p>
+          You can find my resume{" "}
+          <a
+            href={site.resume}
+            download="Preston-Zhao-Resume.pdf"
+            className="link"
+          >
+            here
+          </a>
+          .
+        </p>
       </div>
     </Section>
   )
