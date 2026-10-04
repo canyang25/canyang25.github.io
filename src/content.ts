@@ -12,7 +12,7 @@ export const site: Site = {
   email: "canyang.zhao2@gmail.com",
   githubUsername,
 
-  // Shown as a badge above your name. Set to null to hide it.
+  // Shown under your intro. Set to null to hide it.
   status: "Seeking Summer 2027 internships",
 
   intro:
@@ -68,7 +68,7 @@ export const site: Site = {
     },
   ],
 
-  // Extra buttons next to "Email me" and "GitHub" at the top of the page.
+  // Extra links next to your email and GitHub at the top of the page.
   links: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/preston-zhao" },
     // { label: "Résumé", href: "resume.pdf" }, // put the file in a public/ folder

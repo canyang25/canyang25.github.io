@@ -1,15 +1,15 @@
 # Preston Zhao's personal site
 
-The source for Preston (Canyang) Zhao's one-page personal website: intro, about and skills, featured projects, more repositories pulled live from GitHub, experience, education, and contact. It's built with React, TypeScript, Tailwind CSS, and shadcn/ui, and set up to publish on **GitHub Pages** at `https://canyang25.github.io`.
+The source for Preston (Canyang) Zhao's one-page personal website: intro, about and skills, experience, featured projects, more repositories pulled live from GitHub, education, and contact. It's built with React, TypeScript, Tailwind CSS, and shadcn/ui, and set up to publish on **GitHub Pages** at `https://canyang25.github.io`.
 
 ## Edit the content
 
 Everything the page says lives in [`src/content.ts`](src/content.ts): name, intro, skills, links, projects, experience, and education. Edit that file and the page, browser tab title, and favicon all update.
 
-- `githubUsername` drives the avatar, the GitHub buttons, and the "More on GitHub" section, which lists public repositories live from the GitHub API (forks and archived repositories are skipped).
-- Repositories linked from `projects` get a featured card and are left out of "More on GitHub", so each one appears only once.
-- Set `status` to `null` to hide the badge above the name.
-- To add a résumé button, create a `public/` folder, put `resume.pdf` in it, and uncomment the résumé line under `links`.
+- `githubUsername` drives the avatar, the GitHub links, and the "More on GitHub" section, which lists public repositories live from the GitHub API (forks and archived repositories are skipped).
+- Repositories linked from `projects` are featured under "Projects" and left out of "More on GitHub", so each one appears only once.
+- Set `status` to `null` to hide the line under the intro.
+- To add a résumé link, create a `public/` folder, put `resume.pdf` in it, and uncomment the résumé line under `links`.
 
 ## Run it locally
 
