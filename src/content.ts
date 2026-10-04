@@ -8,8 +8,9 @@ export const site: Site = {
   name: "Preston (Canyang) Zhao",
   initials: "PZ",
   role: "Data science master's student at UW–Madison",
-  location: "Madison, WI · open to relocation",
+  location: "Open to Relocate",
   email: "canyang.zhao2@gmail.com",
+  resume: "/resume.pdf",
   githubUsername,
 
   // Shown under your intro. Set to null to hide it.
@@ -26,7 +27,6 @@ export const site: Site = {
   // Extra links next to your email and GitHub at the top of the page.
   links: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/preston-zhao" },
-    // { label: "Résumé", href: "resume.pdf" }, // put the file in a public/ folder
   ],
 
   // Repositories linked here are left out of the "More on GitHub" section.
@@ -143,6 +143,7 @@ export type Site = {
   role: string
   location: string
   email: string
+  resume: string
   githubUsername: string
   status: string | null
   intro: string

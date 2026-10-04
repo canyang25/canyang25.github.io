@@ -9,7 +9,7 @@ Everything the page says lives in [`src/content.ts`](src/content.ts): name, intr
 - `githubUsername` drives the avatar, the GitHub links, and the "More on GitHub" section, which lists public repositories live from the GitHub API (forks and archived repositories are skipped).
 - Repositories linked from `projects` are featured under "Projects" and left out of "More on GitHub", so each one appears only once.
 - Set `status` to `null` to hide the line under the intro.
-- To add a résumé link, put `resume.pdf` in `public/` and uncomment the résumé line under `links`.
+- The contact section links to `public/resume.pdf`. Replace that file to update the download.
 - `image`, `logo`, and `mark` point at files in `public/` (for example `public/images/mapreduce.png`). Project pictures sit to the right of the write-up. Company logos and the school mark sit beside the entry.
 
 ## Run it locally

@@ -42,7 +42,9 @@ export async function fetchRepos(
   }
 
   const repos: Repo[] = await response.json()
-  return repos.filter((repo) => !repo.fork && !repo.archived)
+  return repos
+    .filter((repo) => !repo.fork && !repo.archived)
+    .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
 }
 
 // A subset of GitHub's linguist colors.
@@ -68,28 +70,3 @@ const LANGUAGE_COLORS: Record<string, string> = {
 export function languageColor(language: string) {
   return LANGUAGE_COLORS[language] ?? "var(--color-muted-foreground)"
 }
-
-const relativeTime = new Intl.RelativeTimeFormat("en", { numeric: "auto" })
-
-const TIME_UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
-  ["year", 60 * 60 * 24 * 365],
-  ["month", 60 * 60 * 24 * 30],
-  ["week", 60 * 60 * 24 * 7],
-  ["day", 60 * 60 * 24],
-  ["hour", 60 * 60],
-  ["minute", 60],
-]
-
-export function timeAgo(isoDate: string, now: number) {
-  const seconds = (new Date(isoDate).getTime() - now) / 1000
-  for (const [unit, unitSeconds] of TIME_UNITS) {
-    if (Math.abs(seconds) >= unitSeconds) {
-      return relativeTime.format(Math.round(seconds / unitSeconds), unit)
-    }
-  }
-  return "just now"
-}
-
-export const compactNumber = new Intl.NumberFormat("en", {
-  notation: "compact",
-})
