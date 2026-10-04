@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-2xl px-6 pt-12 pb-6 sm:pt-16">
+    <section className="px-6 pt-8 pb-6 sm:pt-16">
       <Avatar className="size-16">
         <AvatarImage
           src={`https://github.com/${site.githubUsername}.png?size=128`}

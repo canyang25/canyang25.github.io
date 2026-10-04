@@ -13,6 +13,15 @@ export function Experience() {
             <div className="text-sm leading-7 text-muted-foreground">
               <p className="tabular-nums">{role.period}</p>
               <p className="leading-5">{role.location}</p>
+              {role.logo && (
+                <img
+                  src={role.logo}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="mt-2 h-8 w-auto max-w-40 object-contain object-left"
+                />
+              )}
             </div>
             <div>
               <h3 className="leading-7 font-medium">
